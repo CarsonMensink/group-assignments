@@ -21,10 +21,10 @@ The program implements:
 ## How to Run
 
 The program uses an `input.txt` file containing the jobs.
+To run do: python3 main.py < input.txt
 
 The input format is:
 
-```text
 n
-start_0 start_1 ... start_n-1
-finish_0 finish_1 ... finish_n-1
+start_time[0], start_time[1], ..., start_time[n]
+finish_time[0], finish_time[1], ..., finish_time[n]
