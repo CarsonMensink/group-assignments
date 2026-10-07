@@ -46,3 +46,9 @@ Running time is O(n log n)
 Jobs are ordered based on shortest duration first.
 Ties are broken by the smaller index.
 Running time is O(n log n)
+
+## Longest Duration
+
+Jobs are ordered based on shortest duration first.
+Ties are broken by the smaller index.
+Running time is O(n log n)
