@@ -28,3 +28,21 @@ The input format is:
 n
 start_time[0], start_time[1], ..., start_time[n]
 finish_time[0], finish_time[1], ..., finish_time[n]
+
+## Earliest Finish Time
+
+Jobs are ordered based on smallest finish time first.
+Ties are broken by the smaller index.
+Running time is O(n log n)
+
+## Earliest Start Time
+
+Jobs are ordered based on smallest start time first.
+Ties are broken by the smaller index.
+Running time is O(n log n)
+
+## Shortest Duration
+
+Jobs are ordered based on shortest duration first.
+Ties are broken by the smaller index.
+Running time is O(n log n)
