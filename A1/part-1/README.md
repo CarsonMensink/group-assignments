@@ -1,0 +1,30 @@
+# Job Scheduling Greedy Algorithms
+
+## Overview
+
+This program compares multiple greedy algorithms for the interval scheduling problem.
+
+Each job has a start time and finish time and is represented as a half-open interval:
+
+`[start, finish)`
+
+This means that a job finishing at time `t` is compatible with another job starting at time `t`.
+
+The goal is to select the largest possible set of mutually compatible jobs.
+
+The program implements:
+
+- Earliest Finish Time
+- Earliest Start Time
+- Shortest Duration
+
+## How to Run
+
+The program uses an `input.txt` file containing the jobs.
+
+The input format is:
+
+```text
+n
+start_0 start_1 ... start_n-1
+finish_0 finish_1 ... finish_n-1
