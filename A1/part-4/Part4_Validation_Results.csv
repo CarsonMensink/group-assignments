@@ -1,0 +1,101 @@
+Instance_ID,Distribution_Type,Earliest_Finish_Size,OPT_Size,Match
+1,Sparse,15,15,True
+2,Heavily Overlapping,1,1,True
+3,Varied Lengths,7,7,True
+4,Clustered Starts,3,3,True
+5,Sparse,12,12,True
+6,Heavily Overlapping,1,1,True
+7,Varied Lengths,8,8,True
+8,Clustered Starts,3,3,True
+9,Sparse,14,14,True
+10,Heavily Overlapping,1,1,True
+11,Varied Lengths,8,8,True
+12,Clustered Starts,3,3,True
+13,Sparse,13,13,True
+14,Heavily Overlapping,1,1,True
+15,Varied Lengths,8,8,True
+16,Clustered Starts,3,3,True
+17,Sparse,14,14,True
+18,Heavily Overlapping,1,1,True
+19,Varied Lengths,7,7,True
+20,Clustered Starts,3,3,True
+21,Sparse,14,14,True
+22,Heavily Overlapping,1,1,True
+23,Varied Lengths,7,7,True
+24,Clustered Starts,3,3,True
+25,Sparse,12,12,True
+26,Heavily Overlapping,1,1,True
+27,Varied Lengths,11,11,True
+28,Clustered Starts,3,3,True
+29,Sparse,14,14,True
+30,Heavily Overlapping,1,1,True
+31,Varied Lengths,6,6,True
+32,Clustered Starts,3,3,True
+33,Sparse,14,14,True
+34,Heavily Overlapping,1,1,True
+35,Varied Lengths,9,9,True
+36,Clustered Starts,3,3,True
+37,Sparse,14,14,True
+38,Heavily Overlapping,1,1,True
+39,Varied Lengths,8,8,True
+40,Clustered Starts,3,3,True
+41,Sparse,15,15,True
+42,Heavily Overlapping,1,1,True
+43,Varied Lengths,7,7,True
+44,Clustered Starts,3,3,True
+45,Sparse,13,13,True
+46,Heavily Overlapping,1,1,True
+47,Varied Lengths,13,13,True
+48,Clustered Starts,3,3,True
+49,Sparse,15,15,True
+50,Heavily Overlapping,1,1,True
+51,Varied Lengths,11,11,True
+52,Clustered Starts,3,3,True
+53,Sparse,13,13,True
+54,Heavily Overlapping,1,1,True
+55,Varied Lengths,6,6,True
+56,Clustered Starts,3,3,True
+57,Sparse,13,13,True
+58,Heavily Overlapping,1,1,True
+59,Varied Lengths,9,9,True
+60,Clustered Starts,3,3,True
+61,Sparse,13,13,True
+62,Heavily Overlapping,1,1,True
+63,Varied Lengths,7,7,True
+64,Clustered Starts,3,3,True
+65,Sparse,15,15,True
+66,Heavily Overlapping,1,1,True
+67,Varied Lengths,6,6,True
+68,Clustered Starts,3,3,True
+69,Sparse,12,12,True
+70,Heavily Overlapping,1,1,True
+71,Varied Lengths,9,9,True
+72,Clustered Starts,3,3,True
+73,Sparse,14,14,True
+74,Heavily Overlapping,1,1,True
+75,Varied Lengths,7,7,True
+76,Clustered Starts,3,3,True
+77,Sparse,14,14,True
+78,Heavily Overlapping,1,1,True
+79,Varied Lengths,6,6,True
+80,Clustered Starts,3,3,True
+81,Sparse,15,15,True
+82,Heavily Overlapping,1,1,True
+83,Varied Lengths,9,9,True
+84,Clustered Starts,3,3,True
+85,Sparse,13,13,True
+86,Heavily Overlapping,1,1,True
+87,Varied Lengths,10,10,True
+88,Clustered Starts,3,3,True
+89,Sparse,14,14,True
+90,Heavily Overlapping,1,1,True
+91,Varied Lengths,8,8,True
+92,Clustered Starts,3,3,True
+93,Sparse,14,14,True
+94,Heavily Overlapping,1,1,True
+95,Varied Lengths,8,8,True
+96,Clustered Starts,3,3,True
+97,Sparse,15,15,True
+98,Heavily Overlapping,1,1,True
+99,Varied Lengths,8,8,True
+100,Clustered Starts,3,3,True
