@@ -1,3 +1,5 @@
+from utils import print_selected_jobs
+
 from itertools import combinations
 
 def optimal_solution(n, start_times, finish_times):
@@ -27,4 +29,5 @@ def optimal_solution(n, start_times, finish_times):
             if compatible and len(combo) > len(best):
                 best = list(combo)
 
+    print_selected_jobs("OPT", start_times, finish_times, best)
     return best
