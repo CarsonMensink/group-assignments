@@ -6,24 +6,6 @@ from typing import List
 from jobs import Job, make_jobs
 
 
-# Helper function to pretty print out results
-def print_selected_jobs(name: str, jobs: List[Job], selected_jobs: List[int]):
-    # Show selected input intervals in a consistent format for every solver.
-    jobs_by_index = {job.index: job for job in jobs}
-    print("=" * 40)
-    print(name)
-    print("=" * 40)
-
-    print("Selected jobs:")
-
-    for index in selected_jobs:
-        job = jobs_by_index[index]
-        print(f"Job {index}: [{job.start}, {job.finish})")
-
-    print(f"Total jobs selected: {len(selected_jobs)}")
-    print()
-
-
 # --- Distribution Generators (Timelines represented in Years AD) ---
 
 def generate_sparse(n):
