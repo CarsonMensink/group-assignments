@@ -41,7 +41,7 @@ def shortest_duration(jobs: List[Job]):
 
     return selected_jobs
 
-def longest_duartion(jobs: List[Job]):
+def longest_duration(jobs: List[Job]):
     # Preserve the assignment's longest-duration heuristic with deterministic tie-breaking.
     jobs = sorted(jobs, key=lambda job: (-(job.finish - job.start), job.index))
 

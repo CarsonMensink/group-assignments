@@ -18,7 +18,7 @@ METHODS = [
     ("Earliest Finish", greedy_algorithms.earliest_finish_time),
     ("Earliest Start", greedy_algorithms.earliest_start_time),
     ("Shortest Duration", greedy_algorithms.shortest_duration),
-    ("Longest Duration", greedy_algorithms.longest_duartion),  # Original function spelling
+    ("Longest Duration", greedy_algorithms.longest_duration),  # Original function spelling
 ]
 
 
