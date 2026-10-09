@@ -10,7 +10,7 @@ The program is written in Python 3.
 
 ## How to Run
 
-The program uses the greedy algorithms from the `part-1` folder.
+The program uses the shared greedy algorithms from the root `algorithms` folder and the `Job` record from `jobs.py`.
 
 To run the experiment, open a terminal in the `part-6` folder and enter:
 
@@ -23,6 +23,8 @@ python benchmark_part6.py
 The benchmark generates its own random jobs, so no separate input file is needed.
 
 Each job has a start time and finish time, where the finish time must be greater than the start time. The program generates instances containing 100, 1,000, 10,000, and 100,000 jobs.
+
+Each generated job is stored with its start time, finish time, and original index so all four algorithms can use the same input records.
 
 ## Reproducing the Experiments
 

@@ -2,22 +2,8 @@ import csv
 import json
 import os
 import random
-
-
-# Helper function to pretty print out results
-def print_selected_jobs(name, start_times, finish_times, selected_jobs):
-    # Print which algorithm is running
-    print("=" * 40)
-    print(name)
-    print("=" * 40)
-
-    print("Selected jobs:")
-
-    for index in selected_jobs:
-        print(f"Job {index}: [{start_times[index]}, {finish_times[index]})")
-
-    print(f"Total jobs selected: {len(selected_jobs)}")
-    print()
+from typing import List
+from jobs import Job, make_jobs
 
 
 # --- Distribution Generators (Timelines represented in Years AD) ---
@@ -56,7 +42,7 @@ def generate_tests():
     # Give each distribution 25 cases so the experiment covers different interval patterns.
     for i in range(total_instances):
         dist_name, dist_func = distributions[i % len(distributions)]
-        jobs = dist_func(n_per_instance)
+        jobs = make_jobs(dist_func(n_per_instance))
         tests.append((i + 1, dist_name, jobs))
     return tests
 
@@ -70,7 +56,7 @@ def compare_test(instance_id, dist_name, jobs, greedy_solution, exact_solution):
     return {
         'Instance_ID': instance_id,
         'Distribution_Type': dist_name,
-        'Intervals': jobs,
+        'Intervals': [(job.start, job.finish) for job in jobs],
         'Earliest_Finish_Selected': greedy_solution,
         'OPT_Selected': exact_solution,
         'Earliest_Finish_Size': greedy_size,

@@ -5,36 +5,29 @@ import time
 import sys
 import os
 
-sys.path.insert(0, os.path.abspath(
-    os.path.join(os.path.dirname(__file__), "../part-1")
-))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-import algorithms
-
-# Do not include printing thousands of jobs in the runtime measurements.
-# The original algorithm implementations remain unchanged.
-def do_not_print(*args):
-    pass
-
-algorithms.print_selected_jobs = do_not_print
+from algorithms import greedy_algorithms
+from jobs import Job
 
 SIZES = [100, 1000, 10000, 100000]
 RUNS = 10
 SEED = 4050
 
 METHODS = [
-    ("Earliest Finish", algorithms.earliest_finish_time),
-    ("Earliest Start", algorithms.earliest_start_time),
-    ("Shortest Duration", algorithms.shortest_duration),
-    ("Longest Duration", algorithms.longest_duartion),  # Original function spelling
+    ("Earliest Finish", greedy_algorithms.earliest_finish_time),
+    ("Earliest Start", greedy_algorithms.earliest_start_time),
+    ("Shortest Duration", greedy_algorithms.shortest_duration),
+    ("Longest Duration", greedy_algorithms.longest_duration),  # Original function spelling
 ]
 
 
 def generate_jobs(n, rng):
-    # Use the same jobs for every algorithm at a given input size.
-    starts = [rng.randint(0, n * 10) for _ in range(n)]
-    finishes = [start + rng.randint(1, 100) for start in starts]
-    return starts, finishes
+    # Use the same indexed job records for every algorithm at a given input size.
+    return [
+        Job(start := rng.randint(0, n * 10), start + rng.randint(1, 100), index)
+        for index in range(n)
+    ]
 
 
 def main():
@@ -44,15 +37,15 @@ def main():
     print("Jobs\t" + "\t".join(name for name, _ in METHODS))
 
     for n in SIZES:
-        starts, finishes = generate_jobs(n, rng)
+        jobs = generate_jobs(n, rng)
         medians = []
         for name, method in METHODS:
             # Warm-up excluded from recorded timings.
-            method(n, starts, finishes)
+            method(jobs)
             timings = []
             for _ in range(RUNS):
                 begin = time.perf_counter()
-                method(n, starts, finishes)
+                method(jobs)
                 elapsed_ms = (time.perf_counter() - begin) * 1000
                 timings.append(elapsed_ms)
             median_ms = statistics.median(timings)
