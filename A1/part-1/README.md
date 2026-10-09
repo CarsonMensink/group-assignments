@@ -8,6 +8,8 @@ Each job has a start time and finish time and is represented as a half-open inte
 
 `[start, finish)`
 
+In the code, each interval is a `Job` record with `start`, `finish`, and its original `index`. The greedy algorithms accept a list of these records and return selected job indices without printing, so callers can choose how to display the results.
+
 This means that a job finishing at time `t` is compatible with another job starting at time `t`.
 
 The goal is to select the largest possible set of mutually compatible jobs.
