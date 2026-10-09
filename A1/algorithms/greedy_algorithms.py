@@ -2,66 +2,77 @@ from typing import List
 
 from jobs import Job
 
-# This logic is shared across earliest start and earliest finish greedy functions
-def select_forward_jobs(jobs: List[Job]) -> List[int]:
-    # Allow the first job through while enforcing compatibility for every later job.
-    prior_finish_time = float('-inf')
-    selected_jobs = []
 
-    # Accept touching endpoints because the assignment uses half-open intervals.
+def select_compatible_jobs(jobs: List[Job]) -> List[int]:
+    # Store only actual endpoints so large gaps between times do not waste memory.
+    endpoints = set()
     for job in jobs:
-        if job.start >= prior_finish_time:
+        endpoints.add(job.start)
+        endpoints.add(job.finish)
+    times = sorted(endpoints)
+
+    # Fenwick trees use positions starting at 1; each tree counts selected endpoints.
+    positions = {time: index for index, time in enumerate(times, start=1)}
+    start_counts = [0] * (len(times) + 1)
+    finish_counts = [0] * (len(times) + 1)
+    selected_jobs: List[int] = []
+
+    def count_through(tree: List[int], position: int) -> int:
+        # Count selected endpoints up to this position in O(log n), without scanning jobs.
+        total = 0
+        # Each step adds a stored block, then skips it to avoid counting it twice.
+        while position > 0:
+            total += tree[position]
+            position -= position & -position
+        return total
+
+    def record_endpoint(tree: List[int], position: int) -> None:
+        # Keep endpoint counts ready for future overlap queries in O(log n).
+        # Each step updates a larger stored block that includes this endpoint.
+        while position < len(tree):
+            tree[position] += 1
+            position += position & -position
+
+    # Keep the caller's priority order while allowing compatible jobs anywhere on the timeline.
+    for job in jobs:
+        start_position = positions[job.start]
+        finish_position = positions[job.finish]
+
+        # Exclude jobs starting at this finish and jobs ending at this start: touching is allowed.
+        starts_before_finish = count_through(start_counts, finish_position - 1)
+        finishes_by_start = count_through(finish_counts, start_position)
+        overlaps = starts_before_finish - finishes_by_start
+        if overlaps == 0:
             selected_jobs.append(job.index)
-            prior_finish_time = job.finish
+            record_endpoint(start_counts, start_position)
+            record_endpoint(finish_counts, finish_position)
 
     return selected_jobs
-
-
-def select_non_overlapping_jobs(jobs: List[Job]) -> List[int]:
-    # Keep full records because duration order can select later intervals before earlier ones.
-    selected_jobs: List[Job] = []
-
-    # Accept a candidate only if it fits before or after every selected interval: O(n²).
-    for candidate in jobs:
-        if all(
-            candidate.finish <= selected.start or candidate.start >= selected.finish
-            for selected in selected_jobs
-        ):
-            selected_jobs.append(candidate)
-
-    # Return original input identifiers so callers can report selections consistently.
-    return [job.index for job in selected_jobs]
 
 
 def earliest_finish_time(jobs: List[Job]) -> List[int]:
     # Earliest finish leaves the most room for compatible later jobs.
     jobs = sorted(jobs, key=lambda job: (job.finish, job.index))
 
-    selected_jobs = select_forward_jobs(jobs)
-
-    return selected_jobs
+    return select_compatible_jobs(jobs)
 
 
 def earliest_start_time(jobs: List[Job]) -> List[int]:
     # Preserve the assignment's earliest-start heuristic while using the shared job records.
     jobs = sorted(jobs, key=lambda job: (job.start, job.index))
 
-    selected_jobs = select_forward_jobs(jobs)
+    return select_compatible_jobs(jobs)
 
-    return selected_jobs
 
 def shortest_duration(jobs: List[Job]) -> List[int]:
     # Preserve the assignment's shortest-duration heuristic with the same input identifiers.
     jobs = sorted(jobs, key=lambda job: (job.finish - job.start, job.index))
 
-    selected_jobs = select_non_overlapping_jobs(jobs)
+    return select_compatible_jobs(jobs)
 
-    return selected_jobs
 
 def longest_duration(jobs: List[Job]) -> List[int]:
     # Preserve the assignment's longest-duration heuristic with deterministic tie-breaking.
     jobs = sorted(jobs, key=lambda job: (-(job.finish - job.start), job.index))
 
-    selected_jobs = select_non_overlapping_jobs(jobs)
-
-    return selected_jobs
+    return select_compatible_jobs(jobs)

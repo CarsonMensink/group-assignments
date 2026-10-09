@@ -36,7 +36,7 @@ The main program will generate the test jobs through a helper function, so no in
 Jobs are ordered based on smallest finish time first.
 Ties are broken by the smaller index.
 
-Sorting costs O(n log n). The `select_forward_jobs` helper then makes one O(n) pass, accepting a job when its start is at least the last selected finish time.
+Sorting costs O(n log n). The shared `select_compatible_jobs` helper uses Fenwick trees to check compatibility and record accepted jobs in O(n log n) total time.
 
 **Total worst-case running time: O(n log n).**
 
@@ -45,7 +45,7 @@ Sorting costs O(n log n). The `select_forward_jobs` helper then makes one O(n) p
 Jobs are ordered based on smallest start time first.
 Ties are broken by the smaller index.
 
-Sorting costs O(n log n). The `select_forward_jobs` helper then makes one O(n) pass, accepting a job when its start is at least the last selected finish time.
+Sorting costs O(n log n). The shared `select_compatible_jobs` helper uses Fenwick trees to check compatibility and record accepted jobs in O(n log n) total time.
 
 **Total worst-case running time: O(n log n).**
 
@@ -54,20 +54,26 @@ Sorting costs O(n log n). The `select_forward_jobs` helper then makes one O(n) p
 Jobs are ordered based on shortest duration first.
 Ties are broken by the smaller index.
 
-Sorting costs O(n log n). Because duration order can visit a later interval before an earlier one, `select_non_overlapping_jobs` checks each candidate against every already-selected job until an overlap is found. Compatible jobs may occur before or after the selected intervals.
+Sorting costs O(n log n). The shared `select_compatible_jobs` helper checks each candidate in O(log n), including candidates that fit before, after, or between selected intervals. Its total cost is O(n log n).
 
-If all n jobs are compatible, the helper performs 0 + 1 + ... + (n - 1) = n(n - 1)/2 comparisons, giving O(n²) selection time. Returning the selected indices adds O(n).
-
-**Total worst-case running time: O(n log n + n²) = O(n²).**
+**Total worst-case running time: O(n log n).**
 
 ## Longest Duration
 
 Jobs are ordered based on longest duration first.
 Ties are broken by the smaller index.
 
-Sorting costs O(n log n). This algorithm uses the same `select_non_overlapping_jobs` helper as Shortest Duration because duration order does not guarantee chronological order. Checking candidates against already-selected jobs costs O(n²) in the worst case, and returning selected indices adds O(n).
+Sorting costs O(n log n). This algorithm uses the same `select_compatible_jobs` helper as the other strategies, with O(log n) overlap checks and O(n log n) total selection time.
 
-**Total worst-case running time: O(n log n + n²) = O(n²).**
+**Total worst-case running time: O(n log n).**
+
+## Shared Compatibility Helper
+
+The helper compresses the input endpoints into ordered positions in O(n log n) time. Two Fenwick trees count starts and finishes of selected jobs. For a candidate, the overlap count is:
+
+`selected starts < candidate.finish` minus `selected finishes <= candidate.start`.
+
+For valid intervals (`start < finish`), a zero count means the candidate overlaps no selected job. The strict start boundary and inclusive finish boundary allow touching endpoints. Each query and accepted-endpoint update takes O(log n), and all helper storage uses O(n) space. Jobs are still considered in the caller's priority order.
 
 ## Runtime Summary
 
@@ -75,7 +81,7 @@ Here, n is the number of input jobs. These bounds describe the current implement
 
 | Algorithm | Sorting | Selection | Total worst-case time |
 | --- | --- | --- | --- |
-| Earliest Finish Time | O(n log n) | O(n) | O(n log n) |
-| Earliest Start Time | O(n log n) | O(n) | O(n log n) |
-| Shortest Duration | O(n log n) | O(n²) | O(n²) |
-| Longest Duration | O(n log n) | O(n²) | O(n²) |
+| Earliest Finish Time | O(n log n) | O(n log n) | O(n log n) |
+| Earliest Start Time | O(n log n) | O(n log n) | O(n log n) |
+| Shortest Duration | O(n log n) | O(n log n) | O(n log n) |
+| Longest Duration | O(n log n) | O(n log n) | O(n log n) |
