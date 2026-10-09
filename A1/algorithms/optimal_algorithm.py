@@ -1,25 +1,27 @@
-from utils import print_selected_jobs
+from typing import List
+
+from jobs import Job
 
 from itertools import combinations
 
-def optimal_solution(n, start_times, finish_times):
+def optimal_solution(jobs: List[Job]):
     best = []
 
-    # try every possible subset size
-    for size in range(n + 1):
-        for combo in combinations(range(n), size):
+    # Exhaustively compare subsets because this solver provides the correctness reference.
+    for size in range(len(jobs) + 1):
+        for combo in combinations(range(len(jobs)), size):
 
             compatible = True
 
             # check every pair of jobs in this subset
             for i in range(len(combo)):
                 for j in range(i + 1, len(combo)):
-                    job1 = combo[i]
-                    job2 = combo[j]
+                    job1 = jobs[combo[i]]
+                    job2 = jobs[combo[j]]
 
-                    # jobs overlap
-                    if (start_times[job1] < finish_times[job2] and
-                        start_times[job2] < finish_times[job1]):
+                    # Half-open intervals may touch at an endpoint without overlapping.
+                    if (job1.start < job2.finish and
+                        job2.start < job1.finish):
                         compatible = False
                         break
 
@@ -27,7 +29,6 @@ def optimal_solution(n, start_times, finish_times):
                     break
 
             if compatible and len(combo) > len(best):
-                best = list(combo)
+                best = [jobs[position].index for position in combo]
 
-    print_selected_jobs("OPT", start_times, finish_times, best)
     return best

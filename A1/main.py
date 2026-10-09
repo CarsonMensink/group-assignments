@@ -1,6 +1,3 @@
-from contextlib import redirect_stdout
-from io import StringIO
-
 from algorithms.greedy_algorithms import earliest_finish_time
 from algorithms.optimal_algorithm import optimal_solution
 from utils import compare_test, generate_tests, save_to_csv
@@ -11,16 +8,12 @@ def main():
     tests = generate_tests()
     results = []
 
-    # the existing solvers print each selection show only the final summary here
-    with redirect_stdout(StringIO()):
-        for instance_id, dist_name, jobs in tests:
-            starts = [start for start, _ in jobs]
-            finishes = [finish for _, finish in jobs]
+    # Run solvers without console output so batch validation stays focused on its summary.
+    for instance_id, dist_name, jobs in tests:
+        greedy_solution = earliest_finish_time(jobs)
+        exact_solution = optimal_solution(jobs)
 
-            greedy_solution = earliest_finish_time(len(jobs), starts, finishes)
-            exact_solution = optimal_solution(len(jobs), starts, finishes)
-
-            results.append(compare_test(instance_id, dist_name, jobs, greedy_solution, exact_solution))
+        results.append(compare_test(instance_id, dist_name, jobs, greedy_solution, exact_solution))
 
     # write every case to CSV and summarize the matches in the terminal.
     save_to_csv(results)
