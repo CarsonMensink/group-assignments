@@ -23,13 +23,7 @@ The program implements:
 
 ## How to Run
 
-From the project root, run:
-
-```sh
-python3 main.py
-```
-
-The main program will generate the test jobs through a helper function, so no input file is needed.
+Use Python 3.10 or newer. These shared algorithms are exercised by Parts 3–6; there is no separate Part 1 menu option. From the `A1` folder, run `python3 main.py` and choose Part 3 for counterexamples, Part 4 for Earliest Finish validation, Part 5 for solution quality, or Part 6 for runtime measurements. No input file or third-party package is needed.
 
 ## Earliest Finish Time
 

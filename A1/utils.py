@@ -1,6 +1,4 @@
 import csv
-import json
-import os
 import random
 from typing import List
 from jobs import Job, make_jobs
@@ -65,23 +63,11 @@ def compare_test(instance_id, dist_name, jobs, greedy_solution, exact_solution):
     }
 
 
-def save_to_csv(results_data):
-    """Overwrite the Part 4 CSV with one machine-readable row per test case."""
-    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "part-4", "part4_validation_results.csv")
-    fieldnames = [
-        'Instance_ID', 'Distribution_Type', 'Intervals',
-        'Earliest_Finish_Selected', 'OPT_Selected',
-        'Earliest_Finish_Size', 'OPT_Size', 'Match',
-    ]
-    with open(csv_path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        # Store interval and selection lists as JSON so CSV readers can recover them.
-        for result in results_data:
-            writer.writerow({
-                **result,
-                'Intervals': json.dumps(result['Intervals']),
-                'Earliest_Finish_Selected': json.dumps(result['Earliest_Finish_Selected']),
-                'OPT_Selected': json.dumps(result['OPT_Selected']),
-            })
-    return csv_path
+def save_to_csv(path, headers, rows):
+    """Write a header and rows so each assignment part can save its own CSV format."""
+    # A shared writer keeps file handling consistent while callers define their own columns.
+    with open(path, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(headers)
+        writer.writerows(rows)
+    return path

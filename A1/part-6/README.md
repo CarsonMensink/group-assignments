@@ -2,21 +2,29 @@
 
 ## Overview
 
-This program tests the running times of our four greedy algorithms from Part 1: Earliest Finish Time, Earliest Start Time, Shortest Duration, and Longest Duration.
+This program tests the running times of our four greedy algorithms from Part 1: Earliest Finish Time, Earliest Start Time, Shortest Duration, and Longest Duration. It uses the shared algorithms from the root `algorithms` folder and the `Job` record from `jobs.py`.
 
 ## Language and Version
 
-The program is written in Python 3.
+The project requires Python 3.10 or newer and uses only the standard library.
 
 ## How to Run
 
-The program uses the shared greedy algorithms from the root `algorithms` folder and the `Job` record from `jobs.py`.
+Use Python 3.10 or newer. No third-party packages are required.
 
-To run the experiment, open a terminal in the `part-6` folder and enter:
+From the `A1` folder, run this part directly:
 
+```sh
+python3 part-6/main.py
 ```
-python benchmark_part6.py
+
+Or start the global menu:
+
+```sh
+python3 main.py
 ```
+
+Enter `6` to run Part 6. After it finishes, the menu appears again; enter `q` to quit. The direct command runs only Part 6 and then exits.
 
 ## Expected Input Format
 
@@ -32,4 +40,12 @@ The program generates random intervals and runs all four algorithms 10 times for
 
 The median execution time is calculated for each algorithm and saved to `part6_results.csv`.
 
-The experiment can be repeated by running `benchmark_part6.py` again. Execution times may vary depending on the computer being used.
+The experiment can be repeated by running `python3 part-6/main.py` again. Execution times may vary depending on the computer being used.
+
+## Randomness and Timing Details
+
+Each run resets a local random generator to seed `4050`. For an input size `n`, job starts are integers chosen uniformly from `0` through `10n`; durations are integers from `1` through `100`. Finish time is start plus duration.
+
+One job set is generated per size and reused for all four algorithms and all ten timed repetitions. Each algorithm receives one untimed warm-up per size. Timing uses `time.perf_counter()` and includes the algorithm's sorting and compatibility helper, but excludes input generation, printing, and CSV writing. The CSV stores the median in milliseconds for each size and algorithm. These repetitions measure timing variation on the same instance, not variation across ten different inputs.
+
+All four implementations have O(n log n) worst-case time, including priority sorting and the shared helper's endpoint sorting and Fenwick-tree operations. See the engineering report for measured scaling; timing observations alone do not prove an asymptotic bound.
