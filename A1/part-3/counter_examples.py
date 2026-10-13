@@ -1,6 +1,11 @@
 import random
 import io
+import json
+from pathlib import Path
 from contextlib import redirect_stdout
+
+from jobs import make_jobs
+from utils import save_to_csv
 
 
 def generate_random_instance(min_jobs=4, max_jobs=10):
@@ -21,10 +26,11 @@ def generate_random_instance(min_jobs=4, max_jobs=10):
     return starts, finishes
 
 
-def run_quietly(algorithm, n, starts, finishes):
-    """Run a greedy algorithm without printing its normal output."""
+def run_quietly(algorithm, starts, finishes):
+    """Run a greedy algorithm on shared Job records without console noise."""
+    jobs = make_jobs(zip(starts, finishes))
     with redirect_stdout(io.StringIO()):
-        return algorithm(n, starts, finishes)
+        return algorithm(jobs)
 
 
 def print_instance(starts, finishes):
@@ -73,12 +79,10 @@ def find_counterexample(
             min_jobs=min_jobs,
             max_jobs=max_jobs
         )
-        n = len(starts)
-
         greedy_jobs = run_quietly(
-            algorithm, n, starts, finishes
+            algorithm, starts, finishes
         )
-        optimal_jobs = optimal_solution(n, starts, finishes)
+        optimal_jobs = optimal_solution(make_jobs(zip(starts, finishes)))
 
         if len(greedy_jobs) < len(optimal_jobs):
             print("\n" + "=" * 60)
@@ -135,12 +139,10 @@ def test_earliest_finish(
             min_jobs=1,
             max_jobs=10
         )
-        n = len(starts)
-
         greedy_jobs = run_quietly(
-            earliest_finish_time, n, starts, finishes
+            earliest_finish_time, starts, finishes
         )
-        optimal_jobs = optimal_solution(n, starts, finishes)
+        optimal_jobs = optimal_solution(make_jobs(zip(starts, finishes)))
 
         if len(greedy_jobs) != len(optimal_jobs):
             print(f"FAILED on random test {test_number}")
@@ -168,24 +170,31 @@ def run_automated_search(
     optimal_solution
 ):
     """Search for greedy counterexamples and validate Earliest Finish."""
-    random.seed()  # Use a new random seed for each program run.
+    # Reproduce the same searches even after running other parts from the menu.
+    seed = 4050
+    max_attempts = 5000
+    random.seed(seed)
+    print(f"Random seed: {seed}")
 
-    find_counterexample(
+    earliest_start_example = find_counterexample(
         "Earliest Start",
         earliest_start_time,
-        optimal_solution
+        optimal_solution,
+        max_attempts=max_attempts
     )
 
-    find_counterexample(
+    shortest_duration_example = find_counterexample(
         "Shortest Duration",
         shortest_duration,
-        optimal_solution
+        optimal_solution,
+        max_attempts=max_attempts
     )
 
-    find_counterexample(
-        "Custom Heuristic",
+    custom_example = find_counterexample(
+        "Longest Duration",
         custom_heuristic,
-        optimal_solution
+        optimal_solution,
+        max_attempts=max_attempts
     )
 
     test_earliest_finish(
@@ -193,3 +202,34 @@ def run_automated_search(
         optimal_solution,
         number_of_tests=100
     )
+
+    # Keep one readable row per heuristic, including searches that find no counterexample.
+    headers = [
+        "Algorithm", "Seed", "Counterexample_Found", "Attempts",
+        "Input_Intervals", "Greedy_Selected_Jobs", "Optimal_Selected_Jobs",
+        "Greedy_Count", "Optimal_Count",
+    ]
+    rows = []
+    for name, example in [
+        ("Earliest Start", earliest_start_example),
+        ("Shortest Duration", shortest_duration_example),
+        ("Longest Duration", custom_example),
+    ]:
+        if example is None:
+            # Blank evidence fields distinguish an unsuccessful search from an empty schedule.
+            rows.append((name, seed, False, max_attempts, "", "", "", "", ""))
+            continue
+
+        # JSON within cells preserves lists; each interval's position is its original job index.
+        rows.append((
+            name, seed, True, example["attempts"],
+            json.dumps(list(zip(example["starts"], example["finishes"]))),
+            json.dumps(example["greedy_jobs"]),
+            json.dumps(example["optimal_jobs"]),
+            len(example["greedy_jobs"]), len(example["optimal_jobs"]),
+        ))
+
+    # Use the shared writer so Part 3 produces results in the same format as the other parts.
+    output_path = Path(__file__).resolve().parent / "counterexamples.csv"
+    save_to_csv(output_path, headers, rows)
+    print(f"Counterexamples saved to {output_path.name}")
