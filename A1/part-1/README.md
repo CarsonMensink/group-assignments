@@ -1,16 +1,16 @@
-# Job Scheduling Greedy Algorithms
+# Part 1: Greedy Algorithms
 
 ## Overview
 
-This program compares multiple greedy algorithms for the interval scheduling problem.
+This part implements four greedy algorithms for the interval scheduling problem.
 
 Each job has a start time and finish time and is represented as a half-open interval:
 
 `[start, finish)`
 
-In the code, each interval is a `Job` record with `start`, `finish`, and its original `index`. The greedy algorithms accept a list of these records and return selected job indices without printing, so callers can choose how to display the results.
-
 This means that a job finishing at time `t` is compatible with another job starting at time `t`.
+
+In the code, each interval is a `Job` record with `start`, `finish`, and its original `index`. The greedy algorithms accept a list of these records and return selected job indices without printing, so callers can choose how to display the results.
 
 The goal is to select the largest possible set of mutually compatible jobs.
 

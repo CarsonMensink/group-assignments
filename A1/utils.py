@@ -1,10 +1,9 @@
 import csv
 import random
-from typing import List
-from jobs import Job, make_jobs
+from jobs import make_jobs
 
 
-# --- Distribution Generators (Timelines represented in Years AD) ---
+# --- Part 4 distribution generators ---
 
 def generate_sparse(n):
     """Short durations, spread out over a wide timeline."""
@@ -19,7 +18,7 @@ def generate_varied_lengths(n):
     return [(s := random.randint(100, 300), s + random.choice([random.randint(1, 3), random.randint(50, 100)])) for _ in range(n)]
 
 def generate_clustered_starts(n):
-    """Starts grouped tightly around specific milestones (e.g., AD 100, AD 200, AD 300)."""
+    """Starts grouped tightly around the milestones 100, 200, and 300."""
     clusters = [100, 200, 300]
     return [(s := random.choice(clusters) + random.randint(-5, 5), s + random.randint(10, 30)) for _ in range(n)]
 

@@ -1,4 +1,3 @@
-
 import random
 from pathlib import Path
 import sys
@@ -71,7 +70,8 @@ def run_part_5():
     print("=" * 60)
 
     number_of_instances = 120
-    rng = random.Random(4050)
+    seed = 4050
+    rng = random.Random(seed)
 
     heuristics = {
         "Earliest Finish": earliest_finish_time,
@@ -183,7 +183,7 @@ def run_part_5():
 
     # Print and save summary stats
     print(f"Instances tested: {number_of_instances}")
-    print(f"Random seed: 4050")
+    print(f"Random seed: {seed}")
     print("\n{:<20} {:>14} {:>16} {:>14}".format(
         "Heuristic",
         "Optimal (%)",

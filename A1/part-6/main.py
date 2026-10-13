@@ -18,7 +18,7 @@ METHODS = [
     ("Earliest Finish", greedy_algorithms.earliest_finish_time),
     ("Earliest Start", greedy_algorithms.earliest_start_time),
     ("Shortest Duration", greedy_algorithms.shortest_duration),
-    ("Longest Duration", greedy_algorithms.longest_duration),  # Original function spelling
+    ("Longest Duration", greedy_algorithms.longest_duration),
 ]
 
 
@@ -41,15 +41,15 @@ def run_part_6():
     print("Median runtime (milliseconds) over", RUNS, "runs")
     print(f"{'Jobs':>8}  {'Algorithm':<20}  {'Median (ms)':>12}")
 
-    # Generate jobs in sizes of 10, 100, 1000, and 10000
+    # Generate one job set for each size: 100, 1,000, 10,000, and 100,000 jobs
     for n in SIZES:
         jobs = generate_jobs(n, rng)
-        # Run each greedy algoriothm on each size
+        # Run each greedy algorithm on the same jobs for this size
         for name, method in METHODS:
             # Warm-up excluded from recorded timings.
             method(jobs)
 
-            # We do 10 runs and average the time from all 10 runs
+            # Time 10 runs and keep the median of all 10
             timings = []
             for _ in range(RUNS):
                 # Start timer
@@ -60,9 +60,9 @@ def run_part_6():
                 elapsed_ms = (time.perf_counter() - begin) * 1000
                 # Add result to timings array
                 timings.append(elapsed_ms)
-            # Get the average from all 10 tests
+            # Take the median of the 10 timed runs
             median_ms = statistics.median(timings)
-            # Keep track of average time for all tests at size n
+            # Record the median time for this algorithm at size n
             results.append((n, name, median_ms))
             print(f"{n:>8}  {name:<20}  {median_ms:>12.3f}", flush=True)
 

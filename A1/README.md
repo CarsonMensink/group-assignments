@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Use **Python 3.10 or newer**; the global menu uses `match`/`case`. All programs use the Python standard library, so no package installation is needed. The documented commands were checked with Python 3.14.6.
+Use **Python 3.10 or newer**; the global menu uses `match`/`case`. All programs use the Python standard library, so no package installation is needed. The documented commands were checked with Python 3.13 and 3.14.
 
 ## How to Run
 
@@ -16,7 +16,7 @@ Enter `3`, `4`, `5`, or `6` to run an experiment. The menu returns when it finis
 
 ## Expected Input
 
-No external input file is required. Experiments generate their own intervals. Each interval is half-open, `[start, finish)`, with `start < finish`; touching endpoints are compatible. Internally, solvers accept a list of `Job(start, finish, index)` records and return selected input indices. The menu accepts a part number or `q`.
+No external input file is required. Experiments generate their own intervals. Each interval is half-open, `[start, finish)`, with `start < finish` (`make_jobs` raises a `ValueError` otherwise); touching endpoints are compatible. Internally, solvers accept a list of `Job(start, finish, index)` records and return selected input indices. The menu accepts a part number or `q`.
 
 ## Reproducing the Experiments
 
