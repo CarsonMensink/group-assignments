@@ -1,4 +1,6 @@
-### Optimal Solution
+# Part 2: Optimal Solution
+
+## Overview
 
 The optimal solution uses brute force to test every possible subset of jobs.
 
@@ -7,6 +9,8 @@ The solver accepts the same `Job` records used by the greedy algorithms. Each re
 For each subset, every pair of jobs is checked to determine whether any two jobs overlap. If no jobs overlap, the subset is compatible.
 
 The largest compatible subset found is saved as the optimal solution.
+
+## Running Time
 
 There are `2^n` possible subsets of `n` jobs. For each subset, up to `O(n^2)` pairs of jobs may need to be checked for compatibility.
 
