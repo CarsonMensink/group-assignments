@@ -1,17 +1,21 @@
 import sys
 from pathlib import Path
 
-# Find Part 1 and Part 2 folders.
-project_folder = Path(__file__).resolve().parent.parent
-part1_folder = project_folder / "part-1"
-part2_folder = project_folder / "part-2"
+part_folder = Path(__file__).resolve().parent
+project_folder = part_folder.parent
 
-# Allow Python to import files from those folders.
-sys.path.insert(0, str(part1_folder))
-sys.path.insert(0, str(part2_folder))
+# Direct runs and the global launcher both need access to shared and part-local modules.
+sys.path.insert(0, str(project_folder))
+sys.path.insert(0, str(part_folder))
 
-from algorithms import earliest_finish_time, earliest_start_time, shortest_duration, longest_duartion
-from optimal_solution import optimal_solution
+from algorithms.greedy_algorithms import (
+    earliest_finish_time,
+    earliest_start_time,
+    longest_duration,
+    shortest_duration,
+)
+from algorithms.optimal_algorithm import optimal_solution
+from jobs import make_jobs
 
 from counter_examples import run_automated_search
 
@@ -25,14 +29,14 @@ def run_sanity_test(
     expected_optimal_count,
     expected_greedy_jobs
 ):
-    n = len(starts)
-
+    # Compare both solvers on identical Job records while preserving original indices.
+    jobs = make_jobs(zip(starts, finishes))
     print("\n" + "=" * 50)
     print(name)
     print("=" * 50)
 
-    greedy_jobs = greedy_algorithm(n, starts, finishes)
-    optimal_jobs = optimal_solution(n, starts, finishes)
+    greedy_jobs = greedy_algorithm(jobs)
+    optimal_jobs = optimal_solution(jobs)
 
     greedy_pass = (
         len(greedy_jobs) == expected_greedy_count
@@ -89,7 +93,7 @@ def run_required_sanity_tests():
     return test1_passed and test2_passed
 
 
-def main():
+def run_part_3():
     # Stop if the required sanity checks fail.
     if not run_required_sanity_tests():
         return
@@ -99,9 +103,14 @@ def main():
         earliest_finish_time=earliest_finish_time,
         earliest_start_time=earliest_start_time,
         shortest_duration=shortest_duration,
-        custom_heuristic=longest_duartion,
+        custom_heuristic=longest_duration,
         optimal_solution=optimal_solution
     )
+
+
+def main():
+    # Keep Part 3 runnable directly as well as through the global menu.
+    run_part_3()
 
 
 if __name__ == "__main__":
