@@ -20,14 +20,13 @@ The program implements:
 
 ## How to Run
 
-The program uses an `input.txt` file containing the jobs.
-To run do: python3 main.py < input.txt
+From the project root, run:
 
-The input format is:
+```sh
+python3 main.py
+```
 
-n
-start_time[0], start_time[1], ..., start_time[n]
-finish_time[0], finish_time[1], ..., finish_time[n]
+The main program will generate the test jobs through a helper function, so no input file is needed.
 
 ## Earliest Finish Time
 
