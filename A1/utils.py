@@ -1,26 +1,9 @@
 import csv
-import json
-import os
 import random
+from jobs import make_jobs
 
 
-# Helper function to pretty print out results
-def print_selected_jobs(name, start_times, finish_times, selected_jobs):
-    # Print which algorithm is running
-    print("=" * 40)
-    print(name)
-    print("=" * 40)
-
-    print("Selected jobs:")
-
-    for index in selected_jobs:
-        print(f"Job {index}: [{start_times[index]}, {finish_times[index]})")
-
-    print(f"Total jobs selected: {len(selected_jobs)}")
-    print()
-
-
-# --- Distribution Generators (Timelines represented in Years AD) ---
+# --- Part 4 distribution generators ---
 
 def generate_sparse(n):
     """Short durations, spread out over a wide timeline."""
@@ -35,7 +18,7 @@ def generate_varied_lengths(n):
     return [(s := random.randint(100, 300), s + random.choice([random.randint(1, 3), random.randint(50, 100)])) for _ in range(n)]
 
 def generate_clustered_starts(n):
-    """Starts grouped tightly around specific milestones (e.g., AD 100, AD 200, AD 300)."""
+    """Starts grouped tightly around the milestones 100, 200, and 300."""
     clusters = [100, 200, 300]
     return [(s := random.choice(clusters) + random.randint(-5, 5), s + random.randint(10, 30)) for _ in range(n)]
 
@@ -56,7 +39,7 @@ def generate_tests():
     # Give each distribution 25 cases so the experiment covers different interval patterns.
     for i in range(total_instances):
         dist_name, dist_func = distributions[i % len(distributions)]
-        jobs = dist_func(n_per_instance)
+        jobs = make_jobs(dist_func(n_per_instance))
         tests.append((i + 1, dist_name, jobs))
     return tests
 
@@ -70,7 +53,7 @@ def compare_test(instance_id, dist_name, jobs, greedy_solution, exact_solution):
     return {
         'Instance_ID': instance_id,
         'Distribution_Type': dist_name,
-        'Intervals': jobs,
+        'Intervals': [(job.start, job.finish) for job in jobs],
         'Earliest_Finish_Selected': greedy_solution,
         'OPT_Selected': exact_solution,
         'Earliest_Finish_Size': greedy_size,
@@ -79,23 +62,11 @@ def compare_test(instance_id, dist_name, jobs, greedy_solution, exact_solution):
     }
 
 
-def save_to_csv(results_data):
-    """Overwrite the Part 4 CSV with one machine-readable row per test case."""
-    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "part-4", "part4_validation_results.csv")
-    fieldnames = [
-        'Instance_ID', 'Distribution_Type', 'Intervals',
-        'Earliest_Finish_Selected', 'OPT_Selected',
-        'Earliest_Finish_Size', 'OPT_Size', 'Match',
-    ]
-    with open(csv_path, "w", newline="") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        # Store interval and selection lists as JSON so CSV readers can recover them.
-        for result in results_data:
-            writer.writerow({
-                **result,
-                'Intervals': json.dumps(result['Intervals']),
-                'Earliest_Finish_Selected': json.dumps(result['Earliest_Finish_Selected']),
-                'OPT_Selected': json.dumps(result['OPT_Selected']),
-            })
-    return csv_path
+def save_to_csv(path, headers, rows):
+    """Write a header and rows so each assignment part can save its own CSV format."""
+    # A shared writer keeps file handling consistent while callers define their own columns.
+    with open(path, "w", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(headers)
+        writer.writerows(rows)
+    return path
