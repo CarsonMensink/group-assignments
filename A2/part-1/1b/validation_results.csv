@@ -1,0 +1,366 @@
+case_id,kind,n,array,expected,hand_pairs,brute_force,divide_conquer,counts_agree,sorted_output_ok,input_unchanged,matches_expected,passed
+1,hand: empty,0,,0,no pairs,0,0,True,True,True,True,True
+2,hand: single,1,7,0,no pairs,0,0,True,True,True,True,True
+3,hand: two sorted,2,10 20,0,10<20,0,0,True,True,True,True,True
+4,hand: two reversed,2,20 10,1,"(20,10)",1,1,True,True,True,True,True
+5,hand: already sorted,5,1 2 3 4 5,0,every pair in order,0,0,True,True,True,True,True
+6,hand: reverse sorted n=5,5,5 4 3 2 1,10,"all C(5,2)=10 pairs",10,10,True,True,True,True,True
+7,hand: reverse sorted n=4,4,8 4 2 1,6,"all C(4,2)=6 pairs",6,6,True,True,True,True,True
+8,hand: nearly sorted: one adjacent swap,5,1 2 4 3 5,1,"(4,3)",1,1,True,True,True,True,True
+9,hand: nearly sorted: two adjacent swaps,6,2 1 3 4 6 5,2,"(2,1) (6,5)",2,2,True,True,True,True,True
+10,hand: nearly sorted: one element moved right,5,1 5 2 3 4,3,"(5,2) (5,3) (5,4)",3,3,True,True,True,True,True
+11,hand: largest first,6,6 1 2 3 4 5,5,6 before each of 1..5,5,5,True,True,True,True,True
+12,hand: textbook example,5,2 4 1 3 5,3,"(2,1) (4,1) (4,3)",3,3,True,True,True,True,True
+13,hand: small random,3,3 1 2,2,"(3,1) (3,2)",2,2,True,True,True,True,True
+14,hand: random order,6,3 7 1 9 5 2,8,"(3,1) (3,2) (7,1) (7,5) (7,2) (9,5) (9,2) (5,2)",8,8,True,True,True,True,True
+15,hand: negative values,5,-1 -5 0 3 -2,4,"(-1,-5) (-1,-2) (0,-2) (3,-2)",4,4,True,True,True,True,True
+16,random distinct,29,,,,165,165,True,True,True,True,True
+17,random distinct,44,,,,358,358,True,True,True,True,True
+18,random distinct,35,,,,308,308,True,True,True,True,True
+19,random distinct,1,205,,,0,0,True,True,True,True,True
+20,random distinct,59,,,,857,857,True,True,True,True,True
+21,random distinct,19,278 64 -140 -643 -413 924 752 -537 976 606 714 -948 -611 853 -663 566 772 187 -61,,,87,87,True,True,True,True,True
+22,random distinct,28,,,,237,237,True,True,True,True,True
+23,random distinct,59,,,,779,779,True,True,True,True,True
+24,random distinct,27,,,,188,188,True,True,True,True,True
+25,random distinct,26,,,,170,170,True,True,True,True,True
+26,random distinct,37,,,,342,342,True,True,True,True,True
+27,random distinct,5,554 -611 527 -912 108,,,7,7,True,True,True,True,True
+28,random distinct,42,,,,472,472,True,True,True,True,True
+29,random distinct,2,-961 942,,,0,0,True,True,True,True,True
+30,random distinct,0,,,,0,0,True,True,True,True,True
+31,random distinct,10,-713 959 759 -65 -626 -311 -77 419 737 -58,,,20,20,True,True,True,True,True
+32,random distinct,44,,,,534,534,True,True,True,True,True
+33,random distinct,27,,,,192,192,True,True,True,True,True
+34,random distinct,33,,,,174,174,True,True,True,True,True
+35,random distinct,56,,,,673,673,True,True,True,True,True
+36,random distinct,43,,,,450,450,True,True,True,True,True
+37,random distinct,44,,,,398,398,True,True,True,True,True
+38,random distinct,32,,,,228,228,True,True,True,True,True
+39,random distinct,46,,,,534,534,True,True,True,True,True
+40,random distinct,23,,,,143,143,True,True,True,True,True
+41,random distinct,13,-844 -497 572 -402 -411 -845 -26 993 243 215 -259 -881 368,,,32,32,True,True,True,True,True
+42,random distinct,43,,,,493,493,True,True,True,True,True
+43,random distinct,47,,,,486,486,True,True,True,True,True
+44,random distinct,56,,,,718,718,True,True,True,True,True
+45,random distinct,5,327 741 -650 293 -915,,,8,8,True,True,True,True,True
+46,random distinct,10,486 -207 -396 740 -673 576 119 -669 28 -606,,,28,28,True,True,True,True,True
+47,random distinct,29,,,,211,211,True,True,True,True,True
+48,random distinct,36,,,,355,355,True,True,True,True,True
+49,random distinct,20,626 -927 -605 -65 292 -857 -678 -951 631 -376 -11 760 -270 147 569 630 384 44 -544 -486,,,80,80,True,True,True,True,True
+50,random distinct,49,,,,628,628,True,True,True,True,True
+51,random distinct,47,,,,447,447,True,True,True,True,True
+52,random distinct,7,-501 815 737 -756 986 954 999,,,5,5,True,True,True,True,True
+53,random distinct,26,,,,182,182,True,True,True,True,True
+54,random distinct,21,,,,117,117,True,True,True,True,True
+55,random distinct,12,751 -569 -294 -319 -492 395 651 172 -828 849 -783 334,,,33,33,True,True,True,True,True
+56,random distinct,27,,,,191,191,True,True,True,True,True
+57,random distinct,43,,,,430,430,True,True,True,True,True
+58,random distinct,55,,,,710,710,True,True,True,True,True
+59,random distinct,47,,,,534,534,True,True,True,True,True
+60,random distinct,49,,,,586,586,True,True,True,True,True
+61,random distinct,27,,,,186,186,True,True,True,True,True
+62,random distinct,42,,,,472,472,True,True,True,True,True
+63,random distinct,55,,,,622,622,True,True,True,True,True
+64,random distinct,58,,,,744,744,True,True,True,True,True
+65,random distinct,37,,,,376,376,True,True,True,True,True
+66,random distinct,34,,,,322,322,True,True,True,True,True
+67,random distinct,53,,,,774,774,True,True,True,True,True
+68,random distinct,7,245 -406 -29 432 -472 -799 452,,,11,11,True,True,True,True,True
+69,random distinct,26,,,,160,160,True,True,True,True,True
+70,random distinct,36,,,,380,380,True,True,True,True,True
+71,random distinct,55,,,,816,816,True,True,True,True,True
+72,random distinct,49,,,,572,572,True,True,True,True,True
+73,random distinct,47,,,,460,460,True,True,True,True,True
+74,random distinct,7,-393 966 -332 -457 741 293 -873,,,13,13,True,True,True,True,True
+75,random distinct,52,,,,657,657,True,True,True,True,True
+76,random distinct,27,,,,225,225,True,True,True,True,True
+77,random distinct,53,,,,688,688,True,True,True,True,True
+78,random distinct,58,,,,902,902,True,True,True,True,True
+79,random distinct,17,-265 418 918 324 -122 -974 -98 -266 -576 141 743 581 855 -931 -527 -187 857,,,66,66,True,True,True,True,True
+80,random distinct,53,,,,742,742,True,True,True,True,True
+81,random distinct,7,683 697 158 192 -490 -848 430,,,15,15,True,True,True,True,True
+82,random distinct,6,-248 -749 973 -397 278 -372,,,7,7,True,True,True,True,True
+83,random distinct,6,156 625 -806 956 -368 346,,,7,7,True,True,True,True,True
+84,random distinct,5,889 689 315 372 -178,,,9,9,True,True,True,True,True
+85,random distinct,14,-464 556 889 254 -206 281 395 271 143 -746 -799 -930 -27 747,,,57,57,True,True,True,True,True
+86,random distinct,15,-126 -163 -580 -357 759 957 -478 -400 749 956 863 771 830 -398 -678,,,50,50,True,True,True,True,True
+87,random distinct,0,,,,0,0,True,True,True,True,True
+88,random distinct,23,,,,120,120,True,True,True,True,True
+89,random distinct,31,,,,249,249,True,True,True,True,True
+90,random distinct,6,288 -643 307 943 -25 -322,,,8,8,True,True,True,True,True
+91,random distinct,16,700 -716 -754 215 -837 -32 -257 -904 942 -885 -813 -728 -311 102 841 66,,,55,55,True,True,True,True,True
+92,random distinct,15,652 -118 -653 -779 456 172 -286 624 -628 930 267 405 138 -675 -908,,,61,61,True,True,True,True,True
+93,random distinct,53,,,,662,662,True,True,True,True,True
+94,random distinct,52,,,,680,680,True,True,True,True,True
+95,random distinct,11,-948 -369 69 566 -860 -60 -233 -237 -983 838 -493,,,27,27,True,True,True,True,True
+96,random distinct,39,,,,345,345,True,True,True,True,True
+97,random distinct,60,,,,1024,1024,True,True,True,True,True
+98,random distinct,48,,,,467,467,True,True,True,True,True
+99,random distinct,29,,,,233,233,True,True,True,True,True
+100,random distinct,0,,,,0,0,True,True,True,True,True
+101,random distinct,21,,,,96,96,True,True,True,True,True
+102,random distinct,47,,,,497,497,True,True,True,True,True
+103,random distinct,10,16 -738 -515 -482 -207 851 -785 186 403 -391,,,17,17,True,True,True,True,True
+104,random distinct,5,-724 116 647 -779 316,,,4,4,True,True,True,True,True
+105,random distinct,39,,,,418,418,True,True,True,True,True
+106,random distinct,33,,,,327,327,True,True,True,True,True
+107,random distinct,26,,,,193,193,True,True,True,True,True
+108,random distinct,48,,,,499,499,True,True,True,True,True
+109,random distinct,14,62 -69 672 -710 -781 -20 -410 65 -857 324 -71 719 753 96,,,34,34,True,True,True,True,True
+110,random distinct,58,,,,815,815,True,True,True,True,True
+111,random distinct,5,-496 229 965 -909 988,,,3,3,True,True,True,True,True
+112,random distinct,55,,,,893,893,True,True,True,True,True
+113,random distinct,29,,,,213,213,True,True,True,True,True
+114,random distinct,17,-257 -898 -439 -52 -424 -159 401 167 -695 3 -736 966 256 327 735 -691 -331,,,51,51,True,True,True,True,True
+115,random distinct,13,572 -863 507 -333 -710 927 921 -789 -671 485 -493 -521 473,,,41,41,True,True,True,True,True
+116,random distinct,16,686 -901 148 -5 -631 694 58 762 327 292 -220 -454 157 -526 915 -19,,,60,60,True,True,True,True,True
+117,random distinct,42,,,,485,485,True,True,True,True,True
+118,random distinct,1,-733,,,0,0,True,True,True,True,True
+119,random distinct,10,-579 255 930 972 500 380 -443 817 -56 266,,,23,23,True,True,True,True,True
+120,random distinct,46,,,,573,573,True,True,True,True,True
+121,random distinct,38,,,,373,373,True,True,True,True,True
+122,random distinct,17,954 298 126 -238 159 948 354 -220 -148 -347 858 14 -176 921 -355 -525 625,,,85,85,True,True,True,True,True
+123,random distinct,57,,,,864,864,True,True,True,True,True
+124,random distinct,9,-169 814 -558 -82 -369 -49 25 -506 284,,,15,15,True,True,True,True,True
+125,random distinct,55,,,,644,644,True,True,True,True,True
+126,random distinct,19,-371 262 350 421 216 362 57 556 -644 -701 861 956 639 -524 -101 563 -35 -416 768,,,79,79,True,True,True,True,True
+127,random distinct,19,227 -262 -17 -525 120 974 936 203 -583 761 -286 -630 428 647 -551 -874 705 463 557,,,85,85,True,True,True,True,True
+128,random distinct,1,-206,,,0,0,True,True,True,True,True
+129,random distinct,59,,,,859,859,True,True,True,True,True
+130,random distinct,42,,,,432,432,True,True,True,True,True
+131,random distinct,6,129 -860 -734 -173 -738 -510,,,8,8,True,True,True,True,True
+132,random distinct,60,,,,838,838,True,True,True,True,True
+133,random distinct,10,-435 -312 -756 165 -598 999 877 -370 628 500,,,15,15,True,True,True,True,True
+134,random distinct,38,,,,314,314,True,True,True,True,True
+135,random distinct,14,-122 -905 -779 -697 -792 -296 139 -703 448 668 -549 118 55 -679,,,31,31,True,True,True,True,True
+136,random distinct,31,,,,240,240,True,True,True,True,True
+137,random distinct,58,,,,875,875,True,True,True,True,True
+138,random distinct,32,,,,269,269,True,True,True,True,True
+139,random distinct,42,,,,470,470,True,True,True,True,True
+140,random distinct,12,-377 209 -285 664 -512 -751 184 38 -69 347 242 -212,,,29,29,True,True,True,True,True
+141,random distinct,34,,,,285,285,True,True,True,True,True
+142,random distinct,6,-74 -46 134 -91 -442 -475,,,12,12,True,True,True,True,True
+143,random distinct,44,,,,373,373,True,True,True,True,True
+144,random distinct,53,,,,687,687,True,True,True,True,True
+145,random distinct,31,,,,230,230,True,True,True,True,True
+146,random distinct,55,,,,841,841,True,True,True,True,True
+147,random distinct,54,,,,654,654,True,True,True,True,True
+148,random distinct,14,736 564 -624 179 -982 455 -596 866 798 912 -927 -410 -582 -409,,,47,47,True,True,True,True,True
+149,random distinct,15,404 945 742 61 -942 -867 -328 -450 -531 -485 -980 21 -698 523 495,,,61,61,True,True,True,True,True
+150,random distinct,60,,,,888,888,True,True,True,True,True
+151,random distinct,56,,,,747,747,True,True,True,True,True
+152,random distinct,34,,,,317,317,True,True,True,True,True
+153,random distinct,31,,,,230,230,True,True,True,True,True
+154,random distinct,20,-988 299 96 -575 211 711 758 -389 190 -399 -601 602 434 198 -283 -646 562 117 -243 -301,,,99,99,True,True,True,True,True
+155,random distinct,11,100 62 35 198 895 931 -154 -800 -502 407 74,,,30,30,True,True,True,True,True
+156,random distinct,35,,,,331,331,True,True,True,True,True
+157,random distinct,45,,,,537,537,True,True,True,True,True
+158,random distinct,29,,,,167,167,True,True,True,True,True
+159,random distinct,13,41 -146 -405 -412 -927 -896 -423 666 -110 481 -443 553 531,,,32,32,True,True,True,True,True
+160,random distinct,12,-122 -707 982 754 -608 248 400 29 762 -582 -263 -62,,,34,34,True,True,True,True,True
+161,random distinct,3,-524 -315 -375,,,1,1,True,True,True,True,True
+162,random distinct,17,-815 -59 866 604 954 -85 -968 -856 -272 167 -448 -250 963 366 109 -443 -108,,,68,68,True,True,True,True,True
+163,random distinct,59,,,,790,790,True,True,True,True,True
+164,random distinct,24,,,,135,135,True,True,True,True,True
+165,random distinct,7,-513 -182 483 -24 68 56 -420,,,9,9,True,True,True,True,True
+166,random distinct,7,-602 -300 825 54 470 -632 402,,,9,9,True,True,True,True,True
+167,random distinct,2,-256 -201,,,0,0,True,True,True,True,True
+168,random distinct,40,,,,346,346,True,True,True,True,True
+169,random distinct,27,,,,142,142,True,True,True,True,True
+170,random distinct,54,,,,615,615,True,True,True,True,True
+171,random distinct,0,,,,0,0,True,True,True,True,True
+172,random distinct,45,,,,509,509,True,True,True,True,True
+173,random distinct,5,-257 -473 -189 -32 -237,,,3,3,True,True,True,True,True
+174,random distinct,19,-584 -586 587 647 -833 576 -462 -987 648 681 -354 -843 -829 -271 -476 -351 668 575 -56,,,74,74,True,True,True,True,True
+175,random distinct,15,937 839 -443 120 -223 440 617 -558 -429 -842 -627 517 852 428 452,,,58,58,True,True,True,True,True
+176,random distinct,22,,,,118,118,True,True,True,True,True
+177,random distinct,42,,,,433,433,True,True,True,True,True
+178,random distinct,44,,,,551,551,True,True,True,True,True
+179,random distinct,58,,,,799,799,True,True,True,True,True
+180,random distinct,58,,,,881,881,True,True,True,True,True
+181,random distinct,39,,,,354,354,True,True,True,True,True
+182,random distinct,60,,,,977,977,True,True,True,True,True
+183,random distinct,7,-777 -522 -950 -84 -793 935 513,,,6,6,True,True,True,True,True
+184,random distinct,43,,,,351,351,True,True,True,True,True
+185,random distinct,39,,,,339,339,True,True,True,True,True
+186,random distinct,50,,,,550,550,True,True,True,True,True
+187,random distinct,13,221 803 -92 -759 -965 -12 -628 -322 -803 -856 -130 -570 -64,,,47,47,True,True,True,True,True
+188,random distinct,58,,,,756,756,True,True,True,True,True
+189,random distinct,18,676 -101 -820 -80 -889 830 863 -517 102 508 748 -580 -627 -737 -625 885 -119 688,,,74,74,True,True,True,True,True
+190,random distinct,32,,,,204,204,True,True,True,True,True
+191,random distinct,47,,,,550,550,True,True,True,True,True
+192,random distinct,11,-20 629 679 -182 421 92 364 439 699 -943 765,,,22,22,True,True,True,True,True
+193,random distinct,36,,,,324,324,True,True,True,True,True
+194,random distinct,19,524 -114 41 -632 -362 -177 -809 -234 40 -871 376 789 194 -830 -553 276 -694 225 -887,,,96,96,True,True,True,True,True
+195,random distinct,32,,,,240,240,True,True,True,True,True
+196,random distinct,8,250 -292 -565 -253 -372 976 -914 671,,,14,14,True,True,True,True,True
+197,random distinct,13,-200 13 -693 365 -788 680 -167 -227 191 865 738 90 376,,,25,25,True,True,True,True,True
+198,random distinct,34,,,,231,231,True,True,True,True,True
+199,random distinct,23,,,,121,121,True,True,True,True,True
+200,random distinct,24,,,,129,129,True,True,True,True,True
+201,random distinct,16,943 689 440 -693 -998 -520 982 240 -927 -997 -420 778 -995 631 -722 -437,,,71,71,True,True,True,True,True
+202,random distinct,40,,,,384,384,True,True,True,True,True
+203,random distinct,32,,,,264,264,True,True,True,True,True
+204,random distinct,31,,,,255,255,True,True,True,True,True
+205,random distinct,60,,,,898,898,True,True,True,True,True
+206,random distinct,46,,,,515,515,True,True,True,True,True
+207,random distinct,17,121 -711 -746 317 -85 4 -3 803 -943 -168 -728 793 185 -787 -797 870 974,,,61,61,True,True,True,True,True
+208,random distinct,55,,,,775,775,True,True,True,True,True
+209,random distinct,28,,,,198,198,True,True,True,True,True
+210,random distinct,9,215 -73 -764 -524 584 -590 738 202 -202,,,17,17,True,True,True,True,True
+211,random distinct,6,-606 -364 709 580 -517 -111,,,6,6,True,True,True,True,True
+212,random distinct,2,677 -512,,,1,1,True,True,True,True,True
+213,random distinct,55,,,,692,692,True,True,True,True,True
+214,random distinct,40,,,,450,450,True,True,True,True,True
+215,random distinct,59,,,,728,728,True,True,True,True,True
+216,random distinct,34,,,,334,334,True,True,True,True,True
+217,random distinct,7,-47 954 -471 -790 878 -864 -478,,,15,15,True,True,True,True,True
+218,random distinct,9,-376 753 -158 257 -348 302 342 -584 162,,,18,18,True,True,True,True,True
+219,random distinct,46,,,,541,541,True,True,True,True,True
+220,random distinct,5,710 105 669 -546 -35,,,8,8,True,True,True,True,True
+221,random distinct,31,,,,232,232,True,True,True,True,True
+222,random distinct,22,,,,109,109,True,True,True,True,True
+223,random distinct,6,826 -401 -972 456 870 77,,,7,7,True,True,True,True,True
+224,random distinct,48,,,,524,524,True,True,True,True,True
+225,random distinct,38,,,,372,372,True,True,True,True,True
+226,random distinct,58,,,,800,800,True,True,True,True,True
+227,random distinct,15,991 -72 541 441 -427 477 100 -978 -687 145 -990 595 660 -688 -647,,,65,65,True,True,True,True,True
+228,random distinct,35,,,,328,328,True,True,True,True,True
+229,random distinct,35,,,,311,311,True,True,True,True,True
+230,random distinct,58,,,,849,849,True,True,True,True,True
+231,random distinct,38,,,,320,320,True,True,True,True,True
+232,random distinct,13,-649 -189 171 -24 -631 527 -262 -832 -982 193 287 728 -293,,,33,33,True,True,True,True,True
+233,random distinct,30,,,,221,221,True,True,True,True,True
+234,random distinct,17,57 505 421 657 85 488 -675 452 -495 -847 -450 249 898 -537 551 -392 462,,,71,71,True,True,True,True,True
+235,random distinct,34,,,,265,265,True,True,True,True,True
+236,random distinct,7,234 -182 503 101 -429 -513 -533,,,18,18,True,True,True,True,True
+237,random distinct,32,,,,238,238,True,True,True,True,True
+238,random distinct,53,,,,657,657,True,True,True,True,True
+239,random distinct,51,,,,583,583,True,True,True,True,True
+240,random distinct,22,,,,135,135,True,True,True,True,True
+241,random distinct,20,-889 741 -708 829 -876 543 92 -338 -84 -642 -789 734 200 -687 814 -453 -484 434 587 -554,,,88,88,True,True,True,True,True
+242,random distinct,42,,,,431,431,True,True,True,True,True
+243,random distinct,8,626 739 41 396 -770 914 789 -409,,,15,15,True,True,True,True,True
+244,random distinct,13,-423 323 850 -918 -989 276 -274 -110 562 -797 -924 -821 -462,,,47,47,True,True,True,True,True
+245,random distinct,22,,,,114,114,True,True,True,True,True
+246,random distinct,35,,,,300,300,True,True,True,True,True
+247,random distinct,47,,,,577,577,True,True,True,True,True
+248,random distinct,5,921 -751 -889 713 -298,,,6,6,True,True,True,True,True
+249,random distinct,7,-409 41 737 378 354 -80 762,,,7,7,True,True,True,True,True
+250,random distinct,10,-344 -472 204 453 -296 -744 194 640 167 969,,,14,14,True,True,True,True,True
+251,random distinct,11,107 -292 -938 -992 -521 60 96 740 961 631 418,,,15,15,True,True,True,True,True
+252,random distinct,4,916 -89 -361 592,,,4,4,True,True,True,True,True
+253,random distinct,1,56,,,0,0,True,True,True,True,True
+254,random distinct,9,-414 118 670 -255 478 -27 298 630 -974,,,17,17,True,True,True,True,True
+255,random distinct,0,,,,0,0,True,True,True,True,True
+256,random distinct,17,794 -326 0 203 878 871 -924 -847 427 -858 -170 547 -257 -58 68 778 469,,,65,65,True,True,True,True,True
+257,random distinct,57,,,,740,740,True,True,True,True,True
+258,random distinct,28,,,,180,180,True,True,True,True,True
+259,random distinct,57,,,,842,842,True,True,True,True,True
+260,random distinct,39,,,,349,349,True,True,True,True,True
+261,random distinct,34,,,,281,281,True,True,True,True,True
+262,random distinct,25,,,,201,201,True,True,True,True,True
+263,random distinct,45,,,,496,496,True,True,True,True,True
+264,random distinct,57,,,,791,791,True,True,True,True,True
+265,random distinct,30,,,,247,247,True,True,True,True,True
+266,random distinct,1,648,,,0,0,True,True,True,True,True
+267,random distinct,20,-161 56 531 61 131 730 410 787 -181 436 378 814 525 651 -189 432 824 386 137 993,,,70,70,True,True,True,True,True
+268,random distinct,33,,,,202,202,True,True,True,True,True
+269,random distinct,60,,,,1054,1054,True,True,True,True,True
+270,random distinct,7,123 334 953 -996 356 114 -759,,,13,13,True,True,True,True,True
+271,random distinct,13,-408 -701 -548 -359 -858 -80 423 -340 572 -150 -303 740 787,,,15,15,True,True,True,True,True
+272,random distinct,57,,,,774,774,True,True,True,True,True
+273,random distinct,40,,,,387,387,True,True,True,True,True
+274,random distinct,35,,,,342,342,True,True,True,True,True
+275,random distinct,58,,,,783,783,True,True,True,True,True
+276,random distinct,8,875 926 850 569 -166 -77 -440 822,,,22,22,True,True,True,True,True
+277,random distinct,32,,,,222,222,True,True,True,True,True
+278,random distinct,55,,,,672,672,True,True,True,True,True
+279,random distinct,44,,,,490,490,True,True,True,True,True
+280,random distinct,13,235 744 592 -91 -996 466 -808 -782 -430 633 562 109 -669,,,44,44,True,True,True,True,True
+281,random distinct,41,,,,398,398,True,True,True,True,True
+282,random distinct,46,,,,490,490,True,True,True,True,True
+283,random distinct,38,,,,315,315,True,True,True,True,True
+284,random distinct,49,,,,635,635,True,True,True,True,True
+285,random distinct,26,,,,182,182,True,True,True,True,True
+286,random distinct,41,,,,450,450,True,True,True,True,True
+287,random distinct,27,,,,179,179,True,True,True,True,True
+288,random distinct,41,,,,416,416,True,True,True,True,True
+289,random distinct,4,369 -17 976 870,,,2,2,True,True,True,True,True
+290,random distinct,6,-306 929 -422 -627 -817 125,,,10,10,True,True,True,True,True
+291,random distinct,47,,,,473,473,True,True,True,True,True
+292,random distinct,43,,,,448,448,True,True,True,True,True
+293,random distinct,22,,,,129,129,True,True,True,True,True
+294,random distinct,24,,,,155,155,True,True,True,True,True
+295,random distinct,6,-305 970 106 613 -354 -254,,,9,9,True,True,True,True,True
+296,random distinct,18,-144 191 424 259 775 -600 -20 -566 -902 391 485 674 950 834 604 -54 -356 193,,,66,66,True,True,True,True,True
+297,random distinct,31,,,,210,210,True,True,True,True,True
+298,random distinct,19,275 756 422 -351 -195 -154 8 -163 607 -706 964 -452 232 488 -820 967 265 -56 -787,,,94,94,True,True,True,True,True
+299,random distinct,18,166 4 606 588 631 -925 633 543 -863 835 142 88 231 -174 -397 615 -115 -173,,,90,90,True,True,True,True,True
+300,random distinct,10,-997 -492 -367 936 -920 997 909 947 -151 807,,,14,14,True,True,True,True,True
+301,random distinct,0,,,,0,0,True,True,True,True,True
+302,random distinct,39,,,,371,371,True,True,True,True,True
+303,random distinct,11,-347 -192 51 -627 -872 568 -700 335 -846 848 -219,,,25,25,True,True,True,True,True
+304,random distinct,48,,,,491,491,True,True,True,True,True
+305,random distinct,40,,,,434,434,True,True,True,True,True
+306,random distinct,36,,,,255,255,True,True,True,True,True
+307,random distinct,52,,,,702,702,True,True,True,True,True
+308,random distinct,31,,,,187,187,True,True,True,True,True
+309,random distinct,6,-643 -816 -504 524 775 50,,,3,3,True,True,True,True,True
+310,random distinct,46,,,,553,553,True,True,True,True,True
+311,random distinct,5,550 325 -491 232 96,,,8,8,True,True,True,True,True
+312,random distinct,53,,,,658,658,True,True,True,True,True
+313,random distinct,35,,,,307,307,True,True,True,True,True
+314,random distinct,50,,,,707,707,True,True,True,True,True
+315,random distinct,53,,,,707,707,True,True,True,True,True
+316,random with duplicates,12,3 1 7 0 1 1 7 9 6 6 1 6,,,23,23,True,True,True,True,True
+317,random with duplicates,29,,,,153,153,True,True,True,True,True
+318,random with duplicates,38,,,,380,380,True,True,True,True,True
+319,random with duplicates,13,5 2 9 7 5 4 7 6 9 3 9 7 1,,,35,35,True,True,True,True,True
+320,random with duplicates,2,6 1,,,1,1,True,True,True,True,True
+321,random with duplicates,41,,,,310,310,True,True,True,True,True
+322,random with duplicates,60,,,,861,861,True,True,True,True,True
+323,random with duplicates,31,,,,224,224,True,True,True,True,True
+324,random with duplicates,58,,,,772,772,True,True,True,True,True
+325,random with duplicates,55,,,,618,618,True,True,True,True,True
+326,random with duplicates,54,,,,536,536,True,True,True,True,True
+327,random with duplicates,31,,,,220,220,True,True,True,True,True
+328,random with duplicates,52,,,,570,570,True,True,True,True,True
+329,random with duplicates,47,,,,463,463,True,True,True,True,True
+330,random with duplicates,33,,,,202,202,True,True,True,True,True
+331,random with duplicates,0,,,,0,0,True,True,True,True,True
+332,random with duplicates,32,,,,166,166,True,True,True,True,True
+333,random with duplicates,38,,,,290,290,True,True,True,True,True
+334,random with duplicates,30,,,,181,181,True,True,True,True,True
+335,random with duplicates,23,,,,161,161,True,True,True,True,True
+336,random with duplicates,45,,,,453,453,True,True,True,True,True
+337,random with duplicates,25,,,,124,124,True,True,True,True,True
+338,random with duplicates,36,,,,287,287,True,True,True,True,True
+339,random with duplicates,56,,,,618,618,True,True,True,True,True
+340,random with duplicates,29,,,,175,175,True,True,True,True,True
+341,random with duplicates,3,1 7 9,,,0,0,True,True,True,True,True
+342,random with duplicates,43,,,,339,339,True,True,True,True,True
+343,random with duplicates,46,,,,441,441,True,True,True,True,True
+344,random with duplicates,29,,,,192,192,True,True,True,True,True
+345,random with duplicates,37,,,,299,299,True,True,True,True,True
+346,random with duplicates,37,,,,308,308,True,True,True,True,True
+347,random with duplicates,35,,,,291,291,True,True,True,True,True
+348,random with duplicates,12,2 3 1 2 1 8 9 7 9 8 8 2,,,19,19,True,True,True,True,True
+349,random with duplicates,30,,,,221,221,True,True,True,True,True
+350,random with duplicates,42,,,,384,384,True,True,True,True,True
+351,random with duplicates,38,,,,327,327,True,True,True,True,True
+352,random with duplicates,51,,,,501,501,True,True,True,True,True
+353,random with duplicates,29,,,,178,178,True,True,True,True,True
+354,random with duplicates,0,,,,0,0,True,True,True,True,True
+355,random with duplicates,30,,,,200,200,True,True,True,True,True
+356,random with duplicates,20,0 0 4 1 0 7 1 1 3 5 1 8 0 9 9 4 5 8 0 2,,,58,58,True,True,True,True,True
+357,random with duplicates,43,,,,416,416,True,True,True,True,True
+358,random with duplicates,42,,,,321,321,True,True,True,True,True
+359,random with duplicates,17,7 3 2 5 4 3 4 8 8 8 6 7 2 3 9 2 8,,,52,52,True,True,True,True,True
+360,random with duplicates,58,,,,885,885,True,True,True,True,True
+361,random with duplicates,44,,,,377,377,True,True,True,True,True
+362,random with duplicates,19,6 1 0 1 2 5 7 5 8 5 3 4 3 9 5 5 8 9 8,,,41,41,True,True,True,True,True
+363,random with duplicates,42,,,,431,431,True,True,True,True,True
+364,random with duplicates,4,5 9 8 6,,,3,3,True,True,True,True,True
+365,random with duplicates,17,1 9 9 4 6 9 9 8 7 8 2 4 6 6 2 1 8,,,78,78,True,True,True,True,True
