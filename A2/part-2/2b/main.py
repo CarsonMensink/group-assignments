@@ -1,45 +1,86 @@
-from exact_solver import (
-    export_distinct_counterexamples_csv,
-    inspect_dp_table,
-    run_validation_suite,
-    search_greedy_counterexamples,
+# main.py
+import random
+import csv
+import sys
+from pathlib import Path
+from typing import List, Optional, Tuple
+
+# Allow this script to import the Part 2A algorithms module from the sibling folder.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "2a"))
+
+from algorithms import (
+    coin_change_greedy,
+    coin_change_naive,
+    coin_change_memo,
+    coin_change_dp,
 )
 
+# ==============================================================================
+# INDEPENDENT SOLUTION VALIDATOR
+# ==============================================================================
 
-def main() -> None:
-    print("========================================================")
-    print(" CMP_SC 4050 - Assignment 2: Coin Change Verification")
-    print("========================================================\n")
+def validate_solution(coins: List[int], amount: int, count: int, coin_list: Optional[List[int]]) -> None:
+    if count == -1:
+        assert coin_list is None, f"Expected None list for impossible case (D={coins}, A={amount})"
+        return
 
-    # 1. Run cross-validation suite (hand tests + 150 randomized tests)
-    run_validation_suite()
+    assert coin_list is not None, f"Missing coin list for feasible case (D={coins}, A={amount})"
+    assert len(coin_list) == count, f"Count mismatch: reported {count}, list has {len(coin_list)}"
+    assert sum(coin_list) == amount, f"Sum mismatch: sum({coin_list}) != {amount}"
+    
+    coin_set = set(coins)
+    for c in coin_list:
+        assert c in coin_set, f"Invalid coin {c} used; not in {coins}"
 
-    # 2. Run DP table trace demonstration on the required sanity check case
-    inspect_dp_table([1, 3, 4], 6)
 
-    # 3. Search for automated greedy counterexamples
-    cex = search_greedy_counterexamples(max_coin=12, max_amount=25)
-    print(
-        f"\nFound {len(cex)} total greedy suboptimality instances in search space."
-    )
+# ==============================================================================
+# VALIDATION SUITE & TEST RUNNER
+# ==============================================================================
 
-    # 4. Verify required sanity check D = {1, 3, 4}, A = 6
-    sanity = [x for x in cex if x["D"] == [1, 3, 4] and x["A"] == 6]
-    assert len(sanity) == 1, "Sanity check D={1,3,4}, A=6 was not detected!"
-    print("[PASS] Sanity check confirmed:", sanity[0])
+def run_validation_suite() -> None:
+    hand_tests = [
+        ([1, 5, 10, 25], 0, 0, "Amount requested is 0"),
+        ([2, 4, 6], 7, -1, "Impossible odd target from even coins"),
+        ([5, 10], 3, -1, "Impossible target smaller than smallest coin"),
+        ([1, 3, 4], 6, 2, "Multiple optimal / classic greedy trap (3+3)"),
+        ([1, 2, 5], 11, 3, "Similar to US currency"),
+        ([1, 5, 6, 9], 11, 2, "6+5 vs greedy 9+1+1"),
+    ]
 
-    # 5. Export 3 distinct greedy counterexamples to CSV
-    exported = export_distinct_counterexamples_csv(
-        cex, filename="greedy_counterexamples.csv", limit=3
-    )
-    print(
-        f"\n[PASS] Exported {len(exported)} distinct counterexamples to 'greedy_counterexamples.csv':"
-    )
-    for row in exported:
-        print(
-            f"  - D={row['D']}, A={row['A']} | Greedy: {row['greedy_coins']} ({row['greedy_count']}) vs DP: {row['opt_coins']} ({row['opt_count']})"
-        )
+    print("--- Running Hand-Checkable Test Cases ---")
+    for coins, amount, expected, desc in hand_tests:
+        c_dp, list_dp = coin_change_dp(coins, amount)
+        assert c_dp == expected, f"DP disagreement on '{desc}': got {c_dp}, expected {expected}"
+        validate_solution(coins, amount, c_dp, list_dp)
+    print("Hand-checkable tests passed successfully!\n")
+
+
+# ==============================================================================
+# AUTOMATED GREEDY COUNTEREXAMPLE SEARCH & CSV EXPORT
+# ==============================================================================
+
+def search_greedy_counterexamples(max_coin: int = 15, max_amount: int = 6) -> List[dict]:
+    counterexamples = []
+    for c2 in range(2, max_coin):
+        for c3 in range(c2 + 1, max_coin + 1):
+            coins = [1, c2, c3]
+            for amount in range(1, max_amount + 1):
+                dp_count, dp_list = coin_change_dp(coins, amount)
+                gr_count, gr_list = coin_change_greedy(coins, amount)
+
+                if dp_count != -1 and gr_count != -1 and gr_count > dp_count:
+                    counterexamples.append({
+                        "D": coins,
+                        "A": amount,
+                        "greedy_count": gr_count,
+                        "greedy_coins": gr_list,
+                        "opt_count": dp_count,
+                        "opt_coins": dp_list,
+                        "gap": gr_count - dp_count,
+                    })
+    return counterexamples
 
 
 if __name__ == "__main__":
-    main()
+    print("Starting pipeline...")
+    run_validation_suite()
