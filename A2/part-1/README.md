@@ -59,7 +59,7 @@ and random inputs; only the number of `count += 1` executions changes (0 to
 n(n-1)/2), and that is bounded by the number of comparisons. Each iteration
 does constant work, so the running time is **Θ(n²)** in the best, average, and
 worst case, with Θ(1) extra space. The benchmark confirms this: doubling `n`
-from 1024→2048→4096→8192 multiplied the median time by 3.94, 3.99, and 4.04
+from 1024→2048→4096→8192 multiplied the median time by 3.93, 3.99, and 4.04
 (ideal: 4), and `time / n²` levels off at about 25 ns, which is about 50 ns
 per compared pair, since there are n²/2 pairs.
 
@@ -210,7 +210,7 @@ Median seconds per call ([`1b/benchmark_results.csv`](1b/benchmark_results.csv))
 | n | brute force | divide & conquer | speedup (BF / D&C) |
 | ---: | ---: | ---: | ---: |
 | 2 | 3.26e-7 | 1.21e-6 | 0.27× |
-| 16 | 6.42e-6 | 1.63e-5 | 0.39× |
+| 16 | 6.41e-6 | 1.63e-5 | 0.39× |
 | 32 | 2.24e-5 | 3.64e-5 | 0.61× |
 | 48 | 5.61e-5 | 6.76e-5 | 0.83× |
 | **64** | **9.53e-5** | **8.05e-5** | **1.18×** |
@@ -231,7 +231,7 @@ Median seconds per call ([`1b/benchmark_results.csv`](1b/benchmark_results.csv))
 
 **Growth rates match the analysis.** On the log-log plot the brute-force line
 has slope ≈ 2 and the divide-and-conquer line has slope just over 1. Doubling `n` multiplies
-brute-force time by ≈ 4.0 (3.94, 3.99, 4.04 for 1024→8192), as Θ(n²) predicts,
+brute-force time by ≈ 4.0 (3.93, 3.99, 4.04 for 1024→8192), as Θ(n²) predicts,
 and multiplies divide-and-conquer time by 2.09–2.12 from 4,096 up to 262,144.
 That is Θ(n log n): 2·log(2n)/log n is 2.17 at n = 4,096 and 2.11 at n = 131,072.
 In the normalized graph, `t / n²` for brute force is flat at about 25 ns once
