@@ -1,13 +1,18 @@
 # CMP_SC 4050 - Part 2C
-# Keep this file next to algorithms.py.
+# Uses the group's Part 2A solvers from ../2a/algorithms.py.
 
 import csv
 import random
 import statistics
+import sys
 import time
 from pathlib import Path
 
-from algorithms import coin_change_naive, coin_change_memo, coin_change_dp
+# Allow this script to import the Part 2A algorithms module from the sibling folder,
+# whatever the current working directory is.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "2a"))
+
+from algorithms import coin_change_naive, coin_change_memo, coin_change_dp  # noqa: E402
 
 COINS = [1, 3, 4]
 CALL_LIMIT = 250000

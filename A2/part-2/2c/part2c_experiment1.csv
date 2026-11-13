@@ -1,0 +1,7 @@
+A,naive_status,naive_calls,naive_distinct_reached,memo_calls,memo_cached_states,cache_hits
+5,DONE,15,6,11,6,6
+10,DONE,168,11,26,11,16
+15,DONE,1869,16,41,16,26
+20,DONE,20736,21,56,21,36
+25,DONE,229970,26,71,26,46
+30,STOPPED,250000,31,86,31,56
